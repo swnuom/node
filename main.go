@@ -143,6 +143,7 @@ func getIPv4(platform string) (net.IP, net.IP) {
 	default:
 		localIP := network.LocalIPv4()
 		publicIP := network.PublicIPv4()
+		log.Println("localIP", localIP, "publicIP", publicIP)
 		return localIP, publicIP
 	}
 }
