@@ -119,7 +119,7 @@ func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
 	if err != nil {
                 // Debug: Print the error and Kubernetes API resource information
                 fmt.Printf("Error in ListVPNPeer: %v\n", err)
-                fmt.Printf("API Group: %s, API Version: %s, Resource: %s\n", client.ResourceGroup(), client.ResourceVersion(), client.ResourceType())
+               // fmt.Printf("API Group: %s, API Version: %s, Resource: %s\n", client.ResourceGroup(), client.ResourceVersion(), client.ResourceType())
                 panic(err)
 	}
 	return peers.Items
