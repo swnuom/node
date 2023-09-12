@@ -93,7 +93,7 @@ func CreateVPNPeer(configURL string, hostname string, externalIP net.IP, ipv4 ne
 	}
 }
 
-func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
+/*func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
 	config, err := configFromUrl(configURL)
 	check(err)
 	clientset, err := versioned.NewForConfig(config)
@@ -101,6 +101,23 @@ func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
 	client := clientset.NetworkingV1alpha().VPNPeers()
 	peers, err := client.List(context.TODO(), metav1.ListOptions{})
 	check(err)
+	return peers.Items
+}*/
+
+// Debug: Add a debug statement to print the configURL
+func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
+	fmt.Printf("ListVPNPeer called with configURL: %s\n", configURL) // Debug
+	config, err := configFromUrl(configURL)
+	check(err)
+	clientset, err := versioned.NewForConfig(config)
+	check(err)
+	client := clientset.NetworkingV1alpha().VPNPeers()
+	peers, err := client.List(context.TODO(), metav1.ListOptions{})
+	if err != nil {
+		// Debug: Print the error
+		fmt.Printf("Error in ListVPNPeer: %v\n", err)
+		panic(err)
+	}
 	return peers.Items
 }
 
