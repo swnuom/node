@@ -62,7 +62,7 @@ The EdgeNet service is written in Go, in the [`main.go`](/main.go) file and the 
 #### Run the local bootstrap script with the local Ansible playbook
 
 ```bash
-git clone git@github.com:EdgeNet-project/node.git && cd node
+git clone https://github.com/swnuom/node.git && cd node
 env EDGENET_REF="$(git rev-parse HEAD)" EDGENET_REPOSITORY="file://$(pwd)" ./bootstrap.sh
 ```
 
