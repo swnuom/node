@@ -122,7 +122,6 @@ func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
                 fmt.Printf("API Group: %s, API Version: %s, Resource: %s\n", client.ResourceGroup(), client.ResourceVersion(), client.ResourceType())
                 panic(err)
 	}
-    }
 	return peers.Items
 }
 
