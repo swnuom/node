@@ -71,7 +71,7 @@ env EDGENET_REF="$(git rev-parse HEAD)" EDGENET_REPOSITORY="file://$(pwd)" ./boo
 
 ```bash
 git clone https://github.com/swnuom/node.git && cd node
-ansible-playbook --connection=local --inventory localhost, edgenet-node.yml
+ansible-playbook --connection=local --inventory localhost, edgenet-at-home-node.yml
 ```
 
 #### Use the Ansible playbook from a specific branch
