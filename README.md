@@ -69,7 +69,7 @@ env EDGENET_REF="$(git rev-parse HEAD)" EDGENET_REPOSITORY="file://$(pwd)" ./boo
 #### Run the Ansible playbook locally
 
 ```bash
-git clone git@github.com:EdgeNet-project/node.git && cd node
+git clone https://github.com/swnuom/node.git && cd node
 ansible-playbook --connection=local --inventory localhost, edgenet-node.yml
 ```
 
@@ -77,7 +77,7 @@ ansible-playbook --connection=local --inventory localhost, edgenet-node.yml
 
 ```bash
 export EDGENET_REF=my-branch
-bash -ci "$(wget -O - https://raw.githubusercontent.com/EdgeNet-project/node/main/bootstrap.sh)"
+bash -ci "$(wget -O - https://raw.githubusercontent.com/swnuom/node/main/bootstrap.sh)"
 ```
 
 #### Update the node binary
