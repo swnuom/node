@@ -1,6 +1,6 @@
 # edgenet-kubernetes
 containerd_version: 1.6.22
-kubernetes_version: 1.29.1
+kubernetes_version: 1.29
 edgenet_node_version: 1.0.14
 kubeconfig_url: https://raw.githubusercontent.com/swnuom/edgenet/main/configs/public_ehome.cfg
 # edgenet-ssh
