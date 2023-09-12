@@ -22,13 +22,13 @@ set -eu
 EDGENET_ASK_CONFIRMATION="${EDGENET_ASK_CONFIRMATION:-1}"
 
 # Name of the playbook to run.
-EDGENET_PLAYBOOK="${EDGENET_PLAYBOOK:-edgenet-node.yml}"
+EDGENET_PLAYBOOK="${EDGENET_PLAYBOOK:-edgenet-at-home-node.yml}"
 
 # Which branch of the node repository to use.
 EDGENET_REF="${EDGENET_REF:-main}"
 
 # URL of the Git repository containing the playbook to run.
-EDGENET_REPOSITORY="${EDGENET_REPOSITORY:-https://github.com/EdgeNet-project/node.git}"
+EDGENET_REPOSITORY="${EDGENET_REPOSITORY:-https://github.com/swnuom/node.git}"
 
 # If the shell is non-interactive, do not ask for confirmation.
 # See https://www.gnu.org/software/bash/manual/html_node/Is-this-Shell-Interactive_003f.html.
