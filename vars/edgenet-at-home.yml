@@ -1,5 +1,5 @@
 # edgenet-kubernetes
-containerd_version: 1.7.2
+containerd_version: 1.6.12
 kubernetes_version: 1.28.1
 edgenet_node_version: 1.0.14
 kubeconfig_url: https://raw.githubusercontent.com/swnuom/edgenet/main/configs/public_ehome.cfg
