@@ -110,10 +110,10 @@ func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
 	fmt.Printf("ListVPNPeer called with configURL: %s\n", configURL) // Debug
 	config, err := configFromUrl(configURL)
 	check(err)
-	fmt.Printf("configFromUrl ok")
+	fmt.Printf("configFromUrl ok\n")
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
-	fmt.Printf("NewForConfig ok")
+	fmt.Printf("NewForConfig ok\n")
 	client := clientset.NetworkingV1alpha().VPNPeers()
 	peers, err := client.List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
