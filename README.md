@@ -62,6 +62,7 @@ The EdgeNet service is written in Go, in the [`main.go`](/main.go) file and the 
 #### Run the local bootstrap script with the local Ansible playbook
 
 ```bash
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg| gpg -o /usr/share/keyrings/kubernetes-archive-keyring.gpg --dearmor
 git clone https://github.com/swnuom/node.git && cd node
 env EDGENET_REF="$(git rev-parse HEAD)" EDGENET_REPOSITORY="file://$(pwd)" ./bootstrap.sh
 ```
