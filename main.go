@@ -177,6 +177,15 @@ func main() {
 		config.LocalIPv4, config.PublicIPv4 = getIPv4(config.Platform)
 	}
 
+        config, err := configFromUrl(config.KubeconfigURL)
+	check(err)
+	fmt.Printf("configFromUrl ok\n")
+	clientset, err := versioned.NewForConfig(config)
+	check(err)
+	fmt.Printf("NewForConfig ok\n")
+	client := clientset.NetworkingV1alpha().VPNPeers()
+        fmt.Printf("VPNPeers ok\n")
+
 	// https://github.com/EdgeNet-project/edgenet/issues/156
 	if config.VPNIPv4 == nil || config.VPNIPv6 == nil {
 		log.Println("step=get-vpn-ip")
