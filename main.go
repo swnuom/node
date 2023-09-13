@@ -24,7 +24,6 @@ import (
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"github.com/thanhpk/randstr"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
-	"github.com/EdgeNet-project/edgenet/pkg/generated/clientset/versioned"
 	"gopkg.in/yaml.v3"
 	"log"
 	"math/rand"
@@ -33,7 +32,6 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 const defaultVPNNetworkV4 = "10.183.0.0/20"
