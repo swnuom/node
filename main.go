@@ -52,18 +52,6 @@ func check(err error) {
 	}
 }
 
-func configFromUrl(url string) (*rest.Config, error) {
-	resp, err := http.Get(url)
-	if err != nil {
-		return nil, err
-	}
-	buf, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	return clientcmd.RESTConfigFromKubeConfig(buf)
-}
-
 type edgenetConfig struct {
 	// HostnameRoot is the deterministic component of the hostname (e.g. `aws-eu-west-1a`).
 	HostnameRoot string `yaml:"hostnameRoot"`
