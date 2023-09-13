@@ -183,11 +183,11 @@ func main() {
 	}
 
 	// Locate and load the kubeconfig file
-	home := homedir.HomeDir()
-	configPath := filepath.Join(home, ".kube", "config")
-	config, err := kubeconfig.LoadKubeConfig(configPath)
+	// Create a Kubernetes configuration from a kubeconfig file
+	kubeconfigPath := "/home/clusterslice/.kube/config"
+	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
 	check(err)
-	fmt.Printf("loadkubeconfig ok\n")
+	fmt.Printf("buildconfigfromflags ok\n")
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
 	fmt.Printf("NewForConfig ok\n")
