@@ -194,9 +194,12 @@ func main() {
 		config.LocalIPv4, config.PublicIPv4 = getIPv4(config.Platform)
 	}
 
-        config, err := configFromUrl(config.KubeconfigURL)
+	// Locate and load the kubeconfig file
+	home := homedir.HomeDir()
+	configPath := filepath.Join(home, ".kube", "config")
+	config, err := kubeconfig.LoadKubeConfig(configPath)
 	check(err)
-	fmt.Printf("configFromUrl ok\n")
+	fmt.Printf("loadkubeconfig ok\n")
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
 	fmt.Printf("NewForConfig ok\n")
