@@ -17,7 +17,7 @@ limitations under the License.
 package network
 
 import (
-	"github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha"
+	"github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha1"
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"github.com/vishvananda/netlink"
 	"golang.org/x/sys/unix"
@@ -88,7 +88,7 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
 	}
 }
 
-func AddPeer(name string, peer v1alpha.VPNPeer) {
+func AddPeer(name string, peer v1alpha1.VPNPeer) {
 	client, err := wgctrl.New()
 	check(err)
 
