@@ -18,8 +18,8 @@ package cluster
 
 import (
 	"context"
-	"github.com/EdgeNet-project/edgenet/pkg/apis/core/v1alpha"
-	v1alpha2 "github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha"
+	"github.com/EdgeNet-project/edgenet/pkg/apis/core/v1alpha1"
+	v1alpha2 "github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha1"
 	"github.com/EdgeNet-project/edgenet/pkg/generated/clientset/versioned"
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"io/ioutil"
@@ -70,7 +70,7 @@ func CreateVPNPeer(configURL string, hostname string, externalIP net.IP, ipv4 ne
 	check(err)
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
-	client := clientset.NetworkingV1alpha().VPNPeers()
+	client := clientset.NetworkingV1alpha1().VPNPeers()
 	_externalIP := externalIP.String()
 	peer := &v1alpha2.VPNPeer{
 		ObjectMeta: metav1.ObjectMeta{
@@ -99,7 +99,7 @@ func CreateVPNPeer(configURL string, hostname string, externalIP net.IP, ipv4 ne
 	check(err)
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
-	client := clientset.NetworkingV1alpha().VPNPeers()
+	client := clientset.NetworkingV1alpha1().VPNPeers()
 	peers, err := client.List(context.TODO(), metav1.ListOptions{})
 	check(err)
 	return peers.Items
@@ -114,7 +114,7 @@ func ListVPNPeer(configURL string) []v1alpha2.VPNPeer {
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
 	fmt.Printf("NewForConfig ok\n")
-	client := clientset.NetworkingV1alpha().VPNPeers()
+	client := clientset.NetworkingV1alpha1().VPNPeers()
 	peers, err := client.List(context.TODO(), metav1.ListOptions{})
 	if err != nil {
                 // Debug: Print the error and Kubernetes API resource information
@@ -132,12 +132,12 @@ func Join(configURL string, hostname string, externalIP net.IP) {
 	check(err)
 	clientset, err := versioned.NewForConfig(config)
 	check(err)
-	client := clientset.CoreV1alpha().NodeContributions()
-	nodeContribution := &v1alpha.NodeContribution{
+	client := clientset.CoreV1alpha1().NodeContributions()
+	nodeContribution := &v1alpha1.NodeContribution{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: strings.ReplaceAll(hostname, ".edge-net.io", ""),
 		},
-		Spec: v1alpha.NodeContributionSpec{
+		Spec: v1alpha1.NodeContributionSpec{
 			Enabled: true,
 			Host:    externalIP.String(),
 			Port:    22,
