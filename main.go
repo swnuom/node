@@ -33,10 +33,6 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
-	"io/ioutil"
-	"net/http"
-        "k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
 )
 
 const defaultVPNNetworkV4 = "10.183.0.0/20"
