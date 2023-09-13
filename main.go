@@ -178,19 +178,7 @@ func main() {
 		log.Println("step=get-ip")
 		config.LocalIPv4, config.PublicIPv4 = getIPv4(config.Platform)
 	}
-
-	// Locate and load the kubeconfig file
-	// Create a Kubernetes configuration from a kubeconfig file
-	kubeconfigPath := "/home/clusterslice/.kube/config"
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfigPath)
-	check(err)
-	fmt.Printf("buildconfigfromflags ok\n")
-	clientset, err := versioned.NewForConfig(config)
-	check(err)
-	fmt.Printf("NewForConfig ok\n")
-	client := clientset.NetworkingV1alpha().VPNPeers()
-        fmt.Printf("VPNPeers ok\n")
-
+	
 	// https://github.com/EdgeNet-project/edgenet/issues/156
 	if config.VPNIPv4 == nil || config.VPNIPv6 == nil {
 		log.Println("step=get-vpn-ip")
