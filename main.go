@@ -24,6 +24,7 @@ import (
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"github.com/thanhpk/randstr"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
+	"github.com/EdgeNet-project/edgenet/pkg/generated/clientset/versioned"
 	"gopkg.in/yaml.v3"
 	"log"
 	"math/rand"
