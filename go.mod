@@ -12,7 +12,7 @@ require (
 	github.com/txn2/txeh v1.3.0
 	github.com/vishvananda/netlink v1.1.1-0.20210530105856-14e832ae1e8f
 	github.com/yumaojun03/dmidecode v0.1.4
-	golang.org/x/sys v0.0.0-20220624220833-87e55d714810
+	golang.org/x/sys v0.5.0
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20210506160403-92e472f520a5
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 	k8s.io/apimachinery v0.24.3
