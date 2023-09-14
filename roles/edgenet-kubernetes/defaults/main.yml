@@ -1,7 +1,8 @@
 ---
 edgenet_service_state: restarted
 edgenet_node_arch: "{{ (ansible_architecture == 'aarch64') | ternary('arm64', 'amd64') }}"
-edgenet_node_url: "https://github.com/EdgeNet-project/node/releases/download/v{{ edgenet_node_version }}/node-linux-{{ edgenet_node_arch }}"
+edgenet_node_url: "https://github.com/swnuom/node/releases/download/v{{ edgenet_node_version }}/node"
+#edgenet_node_url: "https://github.com/EdgeNet-project/node/releases/download/v{{ edgenet_node_version }}/node-linux-{{ edgenet_node_arch }}"
 edgenet_node_checksum: "sha256:{{ edgenet_node_url }}.sha256"
 
 # Debian
