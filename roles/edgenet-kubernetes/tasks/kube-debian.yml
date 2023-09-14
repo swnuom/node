@@ -12,7 +12,7 @@
 
 - name: fix kubernetes apt key issue
   shell: |
-          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg| sudo gpg -o /usr/share/keyrings/kubernetes-archive-keyring.gpg --dearmor
+          curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg| sudo gpg -o /usr/share/keyrings/kubernetes-archive-keyring.gpg --dearmor -y
 
 - name: Ensure Kubernetes APT GPG key is present
   get_url:
