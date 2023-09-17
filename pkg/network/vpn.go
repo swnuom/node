@@ -101,11 +101,10 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
     existingIPv6 := addr6.IP.To16()
     existingIPv6Prefix := existingIPv6[:len(existingIPv6)-8] // Remove the last 8 bits (suffix)
 
-	
-    // Calculate the link-local IPv6 address using the MAC address.
+    // Create the link-local IPv6 address by adding the link-local prefix.
     linkLocalIPv6 := netlink.Addr{
         IPNet: &net.IPNet{
-            IP:   net.ParseIP("fe80::").Add(eui64.GenerateInterfaceIdentifier(hardwareAddr)),
+            IP:   append(existingIPv6Prefix, net.ParseIP("fe80::")...),
             Mask: net.CIDRMask(64, 128), // 64 bits for the link-local prefix.
         },
     }
@@ -128,7 +127,6 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
         log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
     }
 }
-
 
 func AddPeer(name string, peer v1alpha1.VPNPeer) {
 	client, err := wgctrl.New()
