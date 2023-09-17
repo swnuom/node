@@ -20,7 +20,7 @@ import (
 	"github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha1"
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"github.com/vishvananda/netlink"
-	"golang.org/x/sys/unix"
+	//"golang.org/x/sys/unix"
 	"golang.zx2c4.com/wireguard/wgctrl"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
 	"log"
