@@ -55,7 +55,7 @@ func InitializeVPN(name string, privateKey string, listenPort int) {
 	check(client.ConfigureDevice(name, config))
 }
 
-func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
+/*func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
 	link := getOrAddVPNLink(name)
 
 	addr4, err := netlink.ParseAddr(ipv4.String())
@@ -85,6 +85,55 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
 	err = netlink.AddrReplace(link, addr6)
 	if err != nil {
 		log.Printf("Failed to set IPv6 for link %s: %s\n", name, err)
+	}
+}*/
+
+func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
+	link := getOrAddVPNLink(name)
+
+	addr4, err := netlink.ParseAddr(ipv4.String())
+	check(err)
+
+	addr6, err := netlink.ParseAddr(ipv6.String())
+	check(err)
+
+	// Calculate the link-local IPv6 address.
+	linkLocalIPv6 := netlink.Addr{
+		IPNet: &net.IPNet{
+			IP:   addr6.IP.To16(),
+			Mask: net.CIDRMask(64, 128), // 64 bits for the link-local prefix.
+		},
+	}
+
+	addrs, err := netlink.AddrList(link, unix.AF_INET)
+	check(err)
+	for _, addr := range addrs {
+		if !addr.Equal(*addr4) {
+			check(netlink.AddrDel(link, &addr))
+		}
+	}
+
+	addrs, err = netlink.AddrList(link, unix.AF_INET6)
+	check(err)
+	for _, addr := range addrs {
+		if !addr.Equal(*addr6) && !addr.Equal(linkLocalIPv6) {
+			check(netlink.AddrDel(link, &addr))
+		}
+	}
+
+	err = netlink.AddrReplace(link, addr4)
+	if err != nil {
+		log.Printf("Failed to set IPv4 for link %s: %s\n", name, err)
+	}
+	err = netlink.AddrReplace(link, addr6)
+	if err != nil {
+		log.Printf("Failed to set IPv6 for link %s: %s\n", name, err)
+	}
+
+	// Add the link-local IPv6 address.
+	err = netlink.AddrReplace(link, &linkLocalIPv6)
+	if err != nil {
+		log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
 	}
 }
 
