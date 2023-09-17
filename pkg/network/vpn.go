@@ -97,7 +97,12 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
     addr6, err := netlink.ParseAddr(ipv6.String())
     check(err)
 
-  // Calculate the link-local IPv6 address using the MAC address.
+    // Extract the existing IPv6 address without the suffix.
+    existingIPv6 := addr6.IP.To16()
+    existingIPv6Prefix := existingIPv6[:len(existingIPv6)-8] // Remove the last 8 bits (suffix)
+
+	
+    // Calculate the link-local IPv6 address using the MAC address.
     linkLocalIPv6 := netlink.Addr{
         IPNet: &net.IPNet{
             IP:   net.ParseIP("fe80::").Add(eui64.GenerateInterfaceIdentifier(hardwareAddr)),
