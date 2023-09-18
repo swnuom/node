@@ -111,14 +111,9 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
     addr6, err := netlink.ParseAddr(ipv6.String())
     check(err)
 
-    // Specify linkLocalIPv6 address 
-    iface, err := net.InterfaceByName(name)
-    if err != nil {
-        log.Printf("Error retrieving network interface: %v\n", err)
-        return
-    }
-
-    macAddr := iface.HardwareAddr
+    // Get the hardware address (MAC address) of the link
+    linkAttrs := link.Attrs()
+    macAddr := linkAttrs.HardwareAddr
     log.Printf("MAC Address of %s: %s\n", name, macAddr)
 
     // Generate the link-local IPv6 address based on the retrieved MAC address.
