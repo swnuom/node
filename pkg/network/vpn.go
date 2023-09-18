@@ -20,6 +20,7 @@ import (
 	"github.com/EdgeNet-project/edgenet/pkg/apis/networking/v1alpha1"
 	"github.com/EdgeNet-project/node/pkg/utils"
 	"github.com/vishvananda/netlink"
+	"github.com/ggiamarchi/mac6/mac"
 	//"golang.org/x/sys/unix"
 	"golang.zx2c4.com/wireguard/wgctrl"
 	"golang.zx2c4.com/wireguard/wgctrl/wgtypes"
@@ -97,17 +98,8 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
     addr6, err := netlink.ParseAddr(ipv6.String())
     check(err)
 
-    // Extract the existing IPv6 address without the suffix.
-    existingIPv6 := addr6.IP.To16()
-    existingIPv6Prefix := existingIPv6[:len(existingIPv6)-8] // Remove the last 8 bits (suffix)
+    //specify linkLocalIPv6 address with the usage of ComputeLinkLocalAddress
 
-    // Create the link-local IPv6 address by adding the link-local prefix.
-    linkLocalIPv6 := netlink.Addr{
-        IPNet: &net.IPNet{
-            IP:   append(existingIPv6Prefix, net.ParseIP("fe80::")...),
-            Mask: net.CIDRMask(64, 128), // 64 bits for the link-local prefix.
-        },
-    }
 
     log.Printf("Adding IPv4 address %s to link %s\n", addr4.String(), name)
     err = netlink.AddrReplace(link, addr4)
