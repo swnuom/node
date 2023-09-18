@@ -65,7 +65,7 @@ ${SUDO} true
 
 # Install Ansible and git if not present.
 if is_not_installed ansible || is_not_installed git; then
-  echo "Installing Ansible and Wireguard..."
+  echo "Installing Ansible ..."
   case "${ID}-${VERSION_ID}" in
   centos-*)
     ${SUDO} yum install --assumeyes --quiet epel-release
@@ -83,7 +83,6 @@ if is_not_installed ansible || is_not_installed git; then
     ${SUDO} apt install --quiet --yes dirmngr software-properties-common
     ${SUDO} apt-add-repository --yes --update ppa:ansible/ansible
     ${SUDO} apt install --quiet --yes ansible git
-    ${SUDO} apt install --quiet --yes wireguard
     ;;
 
   ubuntu-2*)
@@ -91,7 +90,6 @@ if is_not_installed ansible || is_not_installed git; then
     ${SUDO} apt update --quiet
     ${SUDO} apt install --quiet --yes --fix-broken
     ${SUDO} apt install --quiet --yes ansible git
-    ${SUDO} apt install --quiet --yes wireguard
     ;;
 
   *)
@@ -111,7 +109,7 @@ centos-7)
 esac
 
 # Install kubernetes base files
-#ansible-playbook -i localhost kubernetes.yaml
+ansible-playbook -i localhost kubernetes.yaml
 
 # Run the node playbook.
 ansible-pull --accept-host-key --extra-vars "ansible_python_interpreter=${PYTHON}" --inventory localhost, \
