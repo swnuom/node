@@ -29,7 +29,7 @@ import (
 	"fmt"
 )
 
-func getOrAddVPNLink(name string) netlink.Link {
+/*func getOrAddVPNLink(name string) netlink.Link {
 	link, err := netlink.LinkByName(name)
 	if err == nil {
 		return link
@@ -43,7 +43,40 @@ func getOrAddVPNLink(name string) netlink.Link {
 	link = &netlink.Wireguard{LinkAttrs: linkAttrs}
 	check(netlink.LinkAdd(link))
 	return link
+}*/
+
+
+func getOrAddVPNLink(name string) netlink.Link {
+    // Try to retrieve the link by name
+    link, err := netlink.LinkByName(name)
+    if err == nil {
+        log.Printf("Link '%s' found: %+v\n", name, link)
+        return link
+    }
+
+    // If the error is not LinkNotFoundError, panic with the error
+    _, ok := err.(netlink.LinkNotFoundError)
+    if !ok {
+        log.Printf("Error while looking up link '%s': %v\n", name, err)
+        panic(err)
+    }
+
+    // Create new link attributes and assign the name
+    linkAttrs := netlink.NewLinkAttrs()
+    linkAttrs.Name = name
+    link = &netlink.Wireguard{LinkAttrs: linkAttrs}
+
+    // Try to add the link
+    if err := netlink.LinkAdd(link); err != nil {
+        log.Printf("Error while adding link '%s': %v\n", name, err)
+        panic(err)
+    }
+
+    log.Printf("Link '%s' added successfully: %+v\n", name, link)
+
+    return link
 }
+
 
 func InitializeVPN(name string, privateKey string, listenPort int) {
 	link := getOrAddVPNLink(name)
@@ -111,21 +144,6 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
     addr6, err := netlink.ParseAddr(ipv6.String())
     check(err)
 
-    // Get the hardware address (MAC address) of the link
-    linkAttrs := link.Attrs()
-    macAddr := linkAttrs.HardwareAddr
-    log.Printf("MAC Address of %s: %s\n", name, macAddr)
-
-    // Generate the link-local IPv6 address based on the retrieved MAC address.
-    linkLocalIPv6 := generateLinkLocalIPv6(macAddr)
-
-    if linkLocalIPv6 == "" {
-        log.Printf("Failed to generate link-local IPv6 address.")
-        return
-    }
-
-    addrll, err := netlink.ParseAddr(linkLocalIPv6) // Parse link-local IPv6 address as a netlink.Addr
-    check(err)
 
     log.Printf("Adding IPv4 address %s to link %s\n", addr4.String(), name)
     err = netlink.AddrReplace(link, addr4)
@@ -139,11 +157,29 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
         log.Printf("Failed to set IPv6 for link %s: %s\n", name, err)
     }
 
-    log.Printf("Adding link-local IPv6 address %s to link %s\n", addrll, name)
-    err = netlink.AddrReplace(link, addrll)
-    if err != nil {
-        log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
+    // Get the hardware address (MAC address) of the link
+    linkAttrs := link.Attrs()
+    macAddr := linkAttrs.HardwareAddr
+    log.Printf("MAC Address of %s: %s\n", name, macAddr)
+
+    // Generate the link-local IPv6 address based on the retrieved MAC address.
+    linkLocalIPv6 := generateLinkLocalIPv6(macAddr)
+
+    if linkLocalIPv6 == "" {
+        log.Printf("Failed to generate link-local IPv6 address.")
+        return
     }
+
+    log.Printf("Adding link-local IPv6 address %s to link %s\n", linkLocalIPv6, name)
+
+    //addrll, err := netlink.ParseAddr(linkLocalIPv6) // Parse link-local IPv6 address as a netlink.Addr
+    //check(err)
+
+    //log.Printf("Adding link-local IPv6 address %s to link %s\n", addrll, name)
+    //err = netlink.AddrReplace(link, addrll)
+    //if err != nil {
+    //    log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
+   // }
 }
 
 func AddPeer(name string, peer v1alpha1.VPNPeer) {
