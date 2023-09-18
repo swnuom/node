@@ -27,6 +27,7 @@ import (
 	"net"
 	"time"
 	"fmt"
+	"strings"
 )
 
 /*func getOrAddVPNLink(name string) netlink.Link {
@@ -122,13 +123,13 @@ func InitializeVPN(name string, privateKey string, listenPort int) {
 	}
 }*/
 
-func generateLinkLocalIPv6(ipv6Address string) (string, error) {
+func generateLinkLocalIPv6(ipv6Address string) string {
     // Split the IPv6 address by colons to get its parts
     parts := strings.Split(ipv6Address, ":")
 
     // Ensure the IPv6 address has at least 4 parts
     if len(parts) < 4 {
-        return "", fmt.Errorf("invalid IPv6 address: %s", ipv6Address)
+        log.Printf("invalid IPv6 address: %s", ipv6Address)
     }
 
     // Extract the last 4 parts of the IPv6 address as the suffix
@@ -137,7 +138,7 @@ func generateLinkLocalIPv6(ipv6Address string) (string, error) {
     // Create the link-local IPv6 address using the "fe80::" prefix and the extracted suffix
     linkLocalIPv6 := fmt.Sprintf("fe80::%s", suffix)
 
-    return linkLocalIPv6, nil
+    return linkLocalIPv6
 }
 
 func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
