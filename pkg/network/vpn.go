@@ -122,17 +122,22 @@ func InitializeVPN(name string, privateKey string, listenPort int) {
 	}
 }*/
 
-func generateLinkLocalIPv6(macAddress net.HardwareAddr) string {
-    // Ensure the MAC address has 6 bytes.
-    if len(macAddress) != 6 {
-        return ""
+func generateLinkLocalIPv6(ipv6Address string) (string, error) {
+    // Split the IPv6 address by colons to get its parts
+    parts := strings.Split(ipv6Address, ":")
+
+    // Ensure the IPv6 address has at least 4 parts
+    if len(parts) < 4 {
+        return "", fmt.Errorf("invalid IPv6 address: %s", ipv6Address)
     }
 
-    // Create the link-local IPv6 address using the "fe80::" prefix and the MAC address.
-    linkLocalIPv6 := fmt.Sprintf("fe80::%02x%02x:%02xff:fe%02x:%02x%02x",
-        macAddress[0], macAddress[1], macAddress[2], macAddress[3], macAddress[4], macAddress[5])
+    // Extract the last 4 parts of the IPv6 address as the suffix
+    suffix := strings.Join(parts[len(parts)-4:], ":")
 
-    return linkLocalIPv6
+    // Create the link-local IPv6 address using the "fe80::" prefix and the extracted suffix
+    linkLocalIPv6 := fmt.Sprintf("fe80::%s", suffix)
+
+    return linkLocalIPv6, nil
 }
 
 func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
@@ -143,7 +148,6 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
 
     addr6, err := netlink.ParseAddr(ipv6.String())
     check(err)
-
 
     log.Printf("Adding IPv4 address %s to link %s\n", addr4.String(), name)
     err = netlink.AddrReplace(link, addr4)
@@ -157,13 +161,8 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
         log.Printf("Failed to set IPv6 for link %s: %s\n", name, err)
     }
 
-    // Get the hardware address (MAC address) of the link
-    linkAttrs := link.Attrs()
-    macAddr := linkAttrs.HardwareAddr
-    log.Printf("MAC Address of %s: %s\n", name, macAddr)
-
     // Generate the link-local IPv6 address based on the retrieved MAC address.
-    linkLocalIPv6 := generateLinkLocalIPv6(macAddr)
+    linkLocalIPv6 := generateLinkLocalIPv6(addr6.String())
 
     if linkLocalIPv6 == "" {
         log.Printf("Failed to generate link-local IPv6 address.")
