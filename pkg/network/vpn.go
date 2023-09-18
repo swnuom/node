@@ -136,7 +136,7 @@ func generateLinkLocalIPv6(ipv6Address string) string {
     suffix := strings.Join(parts[len(parts)-4:], ":")
 
     // Create the link-local IPv6 address using the "fe80::" prefix and the extracted suffix
-    linkLocalIPv6 := fmt.Sprintf("fe80::%s", suffix)
+    linkLocalIPv6 := fmt.Sprintf("fe80:%s", suffix)
 
     return linkLocalIPv6
 }
