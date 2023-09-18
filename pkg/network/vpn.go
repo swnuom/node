@@ -172,14 +172,14 @@ func AssignVPNIP(name string, ipv4 utils.IPWithMask, ipv6 utils.IPWithMask) {
 
     log.Printf("Adding link-local IPv6 address %s to link %s\n", linkLocalIPv6, name)
 
-    //addrll, err := netlink.ParseAddr(linkLocalIPv6) // Parse link-local IPv6 address as a netlink.Addr
-    //check(err)
+    addrll, err := netlink.ParseAddr(linkLocalIPv6) // Parse link-local IPv6 address as a netlink.Addr
+    check(err)
 
-    //log.Printf("Adding link-local IPv6 address %s to link %s\n", addrll, name)
-    //err = netlink.AddrReplace(link, addrll)
-    //if err != nil {
-    //    log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
-   // }
+    log.Printf("Adding link-local IPv6 address %s to link %s\n", addrll, name)
+    err = netlink.AddrReplace(link, addrll)
+    if err != nil {
+        log.Printf("Failed to set link-local IPv6 for link %s: %s\n", name, err)
+    }
 }
 
 func AddPeer(name string, peer v1alpha1.VPNPeer) {
