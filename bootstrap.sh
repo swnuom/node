@@ -22,7 +22,7 @@ set -eu
 EDGENET_ASK_CONFIRMATION="${EDGENET_ASK_CONFIRMATION:-1}"
 
 # Name of the playbook to run.
-EDGENET_PLAYBOOK="${EDGENET_PLAYBOOK:-edgenet-at-home-node.yml}"
+EDGENET_PLAYBOOK="${EDGENET_PLAYBOOK:-edgenet-codeco.yml}"
 
 # Which branch of the node repository to use.
 EDGENET_REF="${EDGENET_REF:-main}"
@@ -109,6 +109,9 @@ centos-7)
 *)
   PYTHON="/usr/bin/python3" ;;
 esac
+
+# Install kubernetes base files
+#ansible-playbook -i localhost kubernetes.yaml
 
 # Run the node playbook.
 ansible-pull --accept-host-key --extra-vars "ansible_python_interpreter=${PYTHON}" --inventory localhost, \
