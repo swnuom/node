@@ -7,7 +7,7 @@ require (
 	github.com/EdgeNet-project/edgenet v1.0.0-alpha.5
 	github.com/aws/aws-sdk-go v1.44.90
 	github.com/coreos/go-iptables v0.6.0
-	github.com/ggiamarchi/mac6 v0.0.0-20200124230801-41c253a354da // indirect
+	github.com/ggiamarchi/mac6 v0.0.0-20200124230801-41c253a354da
 	github.com/scaleway/scaleway-sdk-go v1.0.0-beta.9
 	github.com/thanhpk/randstr v1.0.4
 	github.com/txn2/txeh v1.3.0
