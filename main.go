@@ -37,7 +37,7 @@ import (
 const defaultVPNNetworkV4 = "10.183.0.0/20"
 const defaultVPNNetworkV6 = "fdb4:ae86:ec99:4004::/64"
 const edgenetConfigFile = "/opt/edgenet/config.yaml"
-const kubeletEnvFileDebian = "/etc/default/kubelet"
+const kubeletEnvFileDebian = "/var/lib/kubelet"
 const kubeletEnvFileRedHat = "/etc/sysconfig/kubelet"
 const vpnLinkName = "edgenetmesh0"
 
