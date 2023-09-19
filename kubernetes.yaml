@@ -3,6 +3,7 @@
   gather_facts: no
   vars:
     kubernetestype: vanilla
+    kubernetesversion: "1.23.15-00"
 
 # https://buildvirtual.net/deploy-a-kubernetes-cluster-using-ansible/
 
@@ -126,7 +127,7 @@
                deb https://apt.kubernetes.io/ kubernetes-xenial main
        when: kubernetestype == "vanilla"
 
-     - name: install kubernetes
+     - name: install kubernetes (latest version)
        become: true
        shell: |
                sudo apt-get update
@@ -137,7 +138,18 @@
        until: "kubeinstall is not failed"
        retries: 10
        delay: 60
-       when: kubernetestype == "vanilla"
+       when: kubernetestype == "vanilla" and kubernetesversion == "none"
+
+     - name: install kubernetes (specific version)
+       shell: |
+               sudo apt-get update
+               sudo apt-get install -y kubelet={{ kubernetesversion }} kubeadm={{ kubernetesversion }} kubectl={{ kubernetesversion }}
+               sudo apt-mark hold kubelet kubeadm kubectl
+       register: kubeinstallversion
+       until: "kubeinstallversion is not failed"
+       retries: 10
+       delay: 60
+       when: kubernetestype == "vanilla" and not kubernetesversion == "none"
 
      - name: install kubectl for k0s
        become: true
