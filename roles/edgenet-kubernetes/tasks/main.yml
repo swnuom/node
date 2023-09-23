@@ -12,12 +12,6 @@
 - name: Install Wireguard
   include_tasks: wireguard.yml
 
-- name: Ensure conntrack table size is large enough
-  sysctl:
-    name: net.netfilter.nf_conntrack_max
-    value: "1000000"
-    state: present
-
 # Fix an issue with CoreDNS on systems running systemd-resolved
 # See https://coredns.io/plugins/loop/#troubleshooting-loops-in-kubernetes-clusters
 - name: Check if systemd-resolved is in use
