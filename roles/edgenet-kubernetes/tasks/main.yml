@@ -12,6 +12,29 @@
 - name: Install Wireguard
   include_tasks: wireguard.yml
 
+- name: Ensure conntrack table size is large enough
+  sysctl:
+    name: net.netfilter.nf_conntrack_max
+    value: "1000000"
+    state: present
+
+# Fix an issue with CoreDNS on systems running systemd-resolved
+# See https://coredns.io/plugins/loop/#troubleshooting-loops-in-kubernetes-clusters
+- name: Check if systemd-resolved is in use
+  stat:
+    path: /run/systemd/resolve/resolv.conf
+  register: resolved_resolv_conf
+
+- name: Ensure native DNS resolvers are used
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    mode: "0644"
+    state: link
+    # In case /etc/resolv.conf is a file and not a symlink
+    force: true
+  when: resolved_resolv_conf.stat.exists
+
 - name: Ensure EdgeNet directory exists
   file:
     path: /opt/edgenet
