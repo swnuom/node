@@ -6,7 +6,7 @@
     kubernetestype: "vanilla"
     kubernetesversion: "1.23.17-00"
     containerdversion: "1.5.11-1"
-    critoolsversion: "1.26.0-00"
+    critoolsversion: "1.25.0-00"
 
 # influenced by: https://buildvirtual.net/deploy-a-kubernetes-cluster-using-ansible/
 # - to lookup available kubernetes versions: 
