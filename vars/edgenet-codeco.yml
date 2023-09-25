@@ -2,7 +2,7 @@
 containerd_version: 1.6.12
 kubernetes_version: 1.28.1
 edgenet_node_version: 1.0.17
-publicIPv4: 195.251.209.231
+#publicIPv4: 195.251.209.231
 kubeconfig_url: https://raw.githubusercontent.com/swnuom/edgenet/main/configs/public_ehome.cfg
 # edgenet-ssh
 edgenet_ssh_public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHybx1s8aoWuybB2VrF+1l6wlMuKsGGK09WvUtzefFPAjkaOedbymfn5iROlQtU+bB3O2iM6Lm11XxJ3XsGR40/oOZrCipryNH/W3OUC8EIRlXLPRq1vYEgAlritGKhttex4jeHbqXag7h27srjqqO6+R60m4PNS0iVYbc+604ljzOHHYL7bL6+rc+ddDl2woE6pY25EhKsauhk6a/RMXWpLxDrkYXxbNbQN4Zchr6bkezwun1UmQnSWG1ufDmNP4TgpzUgOi8fHkQjOi2FQSJQPUT+/0WJv61uCvuZ9iJtlrNUv/mwBry/WnYqG8k7tma++ekmfkZJ1LoTLOzuLYEix/YMrFXjK+Ye4ePT1B3iA4FcSXfRlArCXIHwaBf1QW+YLk+lsFv6AlLHPvyR1537QKE3Ox9AL2KoLNNak9z+AhZEu7+Sk9zRAVocebzIAIvVXPIVoHeaurE2gl38tl/jDK+mB8NJ/w/Rto015Ou5YHLqg2IoIskuNYivFngL6U55EKUiNqWNZmumDQKah2rSX8LKWf3aaGM/ILACTVKU2RKCHz34/Q4Dn/BYunb0k+1aDhuT5B4PMtv6HX9DOF8UTd/v5zN0pwHroNvb0BIPuuyOvHiGdLYSW1LPXUJkFenuCLnc3eLfaRnLsT5Vkt7S4Nki9GyLxXrzD3kDUS5sw== ansible-generated on kubem1
